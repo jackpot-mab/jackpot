@@ -1,0 +1,9 @@
+[submodule "arm-selector"]
+	path = arm-selector
+	url = git@github.com:jackpot-mab/arm-selector.git
+[submodule "experiments-params"]
+	path = experiments-params
+	url = git@github.com:jackpot-mab/experiments-params.git
+[submodule "rewards-service"]
+	path = rewards-service
+	url = git@github.com:jackpot-mab/rewards-service.git
