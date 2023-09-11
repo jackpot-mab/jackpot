@@ -5,8 +5,7 @@
 ## How to add a repo
 
 ```bash
-git submodule add git@github.com:jackpot-mab/arm-selector.git
-```
+	```
 
 ## How to update repos
 
