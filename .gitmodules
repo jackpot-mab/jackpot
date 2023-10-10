@@ -7,3 +7,6 @@
 [submodule "rewards-service"]
 	path = rewards-service
 	url = git@github.com:jackpot-mab/rewards-service.git
+[submodule "reward-predictor"]
+	path = reward-predictor
+	url = git@github.com:jackpot-mab/reward-predictor.git
