@@ -12,6 +12,7 @@ git submodule add git@github.com:jackpot-mab/arm-selector.git
 
 ```bash
 git submodule update --init --recursive
+git submodule update --remote --merge
 ```
 
 

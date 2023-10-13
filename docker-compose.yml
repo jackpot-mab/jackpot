@@ -1,0 +1,44 @@
+version: '3'
+
+services:
+  arm-selector:
+    build:
+      context: ./arm-selector
+      dockerfile: Dockerfile
+
+  experiment-params:
+    build:
+      context: ./experiment-params
+      dockerfile: Dockerfile
+
+  reward-predictor:
+    build:
+      context: ./reward-predictor
+      dockerfile: Dockerfile
+    environment:
+      AWS_KEY: 5a6loyLdY45ZB1qNanW7
+      AWS_SECRET: qqTqNX2HySb1Vuly4uqOsetclYTSfLuK0zP2ymoY
+      ENDPOINT: http://localhost:9000
+      S3_FORCE_PATH_STYLE: true
+
+  db:
+    image: mysql:8.0
+    environment:
+      MYSQL_ROOT_PASSWORD: testroot
+      MYSQL_USER: jackpotian
+      MYSQL_PASSWORD: test
+      MYSQL_DATABASE: experiment_db
+
+  minio:
+    image: minio/minio
+    environment:
+      MINIO_ACCESS_KEY: 5a6loyLdY45ZB1qNanW7
+      MINIO_SECRET_KEY: qqTqNX2HySb1Vuly4uqOsetclYTSfLuK0zP2ymoY
+    ports:
+      - "9000:9000"
+    volumes:
+      - minio-data:/data
+    command: server /data
+
+volumes:
+  minio-data:
