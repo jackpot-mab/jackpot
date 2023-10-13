@@ -5,33 +5,51 @@ services:
     build:
       context: ./arm-selector
       dockerfile: Dockerfile
+    ports:
+      - "8090:8090"
     environment:
-      EXPERIMENTS_PARAMS_SERVICE_URL: http://experiment-params:8091/api/v1/experiment/
+      EXPERIMENTS_PARAMS_SERVICE_URL: http://experiments-params:8091/api/v1/experiment/
       REWARD_PREDICTOR_URL: http://reward-predictor:8092/api/v1/prediction
+      GIN_MODE: release
+    depends_on:
+      - experiments-params
+      - reward-predictor
 
-  experiment-params:
+  experiments-params:
     build:
       context: ./experiments-params
       dockerfile: Dockerfile
+    ports:
+      - "8091:8091"
     environment:
       DB_HOST: db
-      DB_PORT: 3307
+      DB_PORT: 3306
       DB_USER: jackpotian
       DB_PASSWORD: ${DB_PASSWORD}
       DB_NAME: experiment_db
+      GIN_MODE: release
+    depends_on:
+      - db
 
   reward-predictor:
     build:
       context: ./reward-predictor
       dockerfile: Dockerfile
+    ports:
+      - "8092:8092"
     environment:
       AWS_KEY: ${AWS_KEY}
       AWS_SECRET: ${AWS_SECRET}
-      ENDPOINT: http://minio:9000
-      S3_FORCE_PATH_STYLE: true
+      ENDPOINT: "http://minio:9000"
+      S3_FORCE_PATH_STYLE: "true"
+      GIN_MODE: "release"
+    depends_on:
+      - minio
 
   db:
     image: mysql:8.0
+    ports:
+      - "3308:3306"
     environment:
       MYSQL_ROOT_PASSWORD: testroot
       MYSQL_USER: jackpotian
@@ -39,15 +57,17 @@ services:
       MYSQL_DATABASE: experiment_db
 
   minio:
-    image: minio/minio
+    image: minio/minio:RELEASE.2023-10-07T15-07-38Z
     environment:
       MINIO_ACCESS_KEY: ${AWS_KEY}
       MINIO_SECRET_KEY: ${AWS_SECRET}
     ports:
       - "9000:9000"
+      - "9001:9001"
     volumes:
       - minio-data:/data
-    command: server /data
+    command: server /data --console-address :9001
 
 volumes:
   minio-data:
+
