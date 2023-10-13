@@ -5,20 +5,29 @@ services:
     build:
       context: ./arm-selector
       dockerfile: Dockerfile
+    environment:
+      EXPERIMENTS_PARAMS_SERVICE_URL: http://experiment-params:8091/api/v1/experiment/
+      REWARD_PREDICTOR_URL: http://reward-predictor:8092/api/v1/prediction
 
   experiment-params:
     build:
-      context: ./experiment-params
+      context: ./experiments-params
       dockerfile: Dockerfile
+    environment:
+      DB_HOST: db
+      DB_PORT: 3307
+      DB_USER: jackpotian
+      DB_PASSWORD: ${DB_PASSWORD}
+      DB_NAME: experiment_db
 
   reward-predictor:
     build:
       context: ./reward-predictor
       dockerfile: Dockerfile
     environment:
-      AWS_KEY: 5a6loyLdY45ZB1qNanW7
-      AWS_SECRET: qqTqNX2HySb1Vuly4uqOsetclYTSfLuK0zP2ymoY
-      ENDPOINT: http://localhost:9000
+      AWS_KEY: ${AWS_KEY}
+      AWS_SECRET: ${AWS_SECRET}
+      ENDPOINT: http://minio:9000
       S3_FORCE_PATH_STYLE: true
 
   db:
@@ -26,14 +35,14 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: testroot
       MYSQL_USER: jackpotian
-      MYSQL_PASSWORD: test
+      MYSQL_PASSWORD: ${DB_PASSWORD}
       MYSQL_DATABASE: experiment_db
 
   minio:
     image: minio/minio
     environment:
-      MINIO_ACCESS_KEY: 5a6loyLdY45ZB1qNanW7
-      MINIO_SECRET_KEY: qqTqNX2HySb1Vuly4uqOsetclYTSfLuK0zP2ymoY
+      MINIO_ACCESS_KEY: ${AWS_KEY}
+      MINIO_SECRET_KEY: ${AWS_SECRET}
     ports:
       - "9000:9000"
     volumes:
