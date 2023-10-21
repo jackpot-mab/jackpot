@@ -10,3 +10,6 @@
 [submodule "reward-predictor"]
 	path = reward-predictor
 	url = git@github.com:jackpot-mab/reward-predictor.git
+[submodule "model-trainer"]
+	path = model-trainer
+	url = git@github.com:jackpot-mab/model-trainer.git
