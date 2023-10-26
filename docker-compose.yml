@@ -15,6 +15,8 @@ services:
       AWS_SECRET: ${AWS_SECRET}
       S3_ENDPOINT: http://minio:9000
       BUCKET_NAME: model
+      CASSANDRA_HOST: cassandra
+      CASSANDRA_PORT: 9042
     depends_on:
       - db
       - minio
@@ -85,6 +87,37 @@ services:
     volumes:
       - minio-data:/data
     command: server /data --console-address :9001
+
+  rabbitmq:
+    image: rodriecheconea/jackpot-rabbit
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+
+  cassandra:
+    build:
+      context: ./rewards-service
+      dockerfile: cassandra.dockerfile
+    ports:
+      - "9042:9042"
+
+  reward-service:
+    build:
+      context: ./rewards-service
+      dockerfile: Dockerfile
+    environment:
+      QUEUE_PORT: 5672
+      QUEUE_URL: rabbitmq
+      QUEUE_USER: jackpotRewardsService
+      QUEUE_PASSWORD: ${QUEUE_PASSWORD}
+      CASSANDRA_URL: localhost
+      CASSANDRA_PORT: 9042
+    depends_on:
+      - initializer
+      - cassandra
+      - rabbitmq
+
+
 
 
 # reward service <- tiene un .env que me lo va a pasar rodri.

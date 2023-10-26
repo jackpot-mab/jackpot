@@ -18,14 +18,13 @@ if [ -z "${S3_ENDPOINT}" ] || [ -z "${BUCKET_NAME}" ] || [ -z "${AWS_KEY}" ] || 
     exit 1
 fi
 
-echo "Waiting 5 seconds to the db to be up..."
-sleep 5
+echo "Waiting 15 seconds to the db to be up..."
+sleep 15
 echo "Starting.."
 
 echo "Excuting db creation script...."
 
 mysql -h "${DB_HOST}" -P "${DB_PORT}" -u "${DB_USER}" -p"${DB_PASSWORD}" < db/creation_schema.sql
-#mysql -h 0.0.0.0 -P 3308 -u jackpotian -ptest < db/creation_schema.sql
 
 echo "Finalized db creation."
 
@@ -33,7 +32,17 @@ echo "Generating bucket in S3/Minio...."
 export AWS_ACCESS_KEY_ID=${AWS_KEY}
 export AWS_SECRET_ACCESS_KEY=${AWS_SECRET}
 
-aws --endpoint-url "${S3_ENDPOINT}" s3api create-bucket --bucket "${BUCKET_NAME}"
+if aws --endpoint-url "${S3_ENDPOINT}" s3 ls "s3://${BUCKET_NAME}" 2>/dev/null; then
+  echo "The bucket '${BUCKET_NAME}' exists."
+else
+  aws --endpoint-url "${S3_ENDPOINT}" s3api create-bucket --bucket "${BUCKET_NAME}"
+fi
 
 echo "Finalized bucket creation."
+
+echo "Executing cassandra script...."
+cqlsh ${CASSANDRA_HOST} -p ${CASSANDRA_PORT} -f cass/db_init.cql
+echo "Cassandra script executed."
+
+echo "All done! Bye."
 
