@@ -1,6 +1,6 @@
-# JACKPOT - The one that rules em all
+# Jackpot
 
-	Links to all Jackpot repositories
+	Jackpot runner, all the repos in one place, scripts to start framework.
 
 ## How to add a repo
 
@@ -10,10 +10,14 @@ git submodule add git@github.com:jackpot-mab/arm-selector.git
 
 ## How to update repos
 
+# Download all repos when first clone
+
 ```bash
 git submodule update --init --recursive
-git submodule update --remote --merge
 ```
 
-TODOS:
-1. You have to run cassandra schema script
+# Update a repo after it was updated
+
+```bash
+git submodule update --remote --merge
+```
