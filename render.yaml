@@ -37,7 +37,7 @@ services:
   # ... Other services ...
 
   # MySQL Database
-  - type: psaas
+  - type: pserv
     name: mysql-db
     env: mysql
     plan: starter

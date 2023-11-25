@@ -110,7 +110,7 @@ services:
       QUEUE_URL: rabbitmq
       QUEUE_USER: jackpotRewardsService
       QUEUE_PASSWORD: ${QUEUE_PASSWORD}
-      CASSANDRA_URL: localhost
+      CASSANDRA_URL: cassandra
       CASSANDRA_PORT: 9042
     depends_on:
       - initializer
