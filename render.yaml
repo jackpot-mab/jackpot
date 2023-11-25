@@ -2,7 +2,7 @@ services:
   # Initializer Service
   - type: web
     name: initializer
-    runtime: docker
+    runtime: image
     buildCommand: "cd initializer && docker build -t initializer ."
     startCommand: "docker run initializer"
     envVars:
@@ -22,8 +22,8 @@ services:
   - type: web
     name: arm-selector
     runtime: docker
-    buildCommand: "cd arm-selector && docker build -t arm-selector ."
-    startCommand: "docker run arm-selector"
+    # buildCommand: "cd arm-selector && docker build -t arm-selector ."
+    # startCommand: "docker run arm-selector"
     # httpPort: 8090
     envVars:
       - key: EXPERIMENTS_PARAMS_SERVICE_URL
@@ -58,8 +58,8 @@ services:
   - type: web
     name: cassandra
     runtime: docker
-    buildCommand: "cd rewards-service && docker build -f cassandra.dockerfile -t cassandra ."
-    startCommand: "docker run cassandra"
+    # buildCommand: "cd rewards-service && docker build -f cassandra.dockerfile -t cassandra ."
+    # startCommand: "docker run cassandra"
     envVars:
       - key: PORT
         value: 9042
