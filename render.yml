@@ -1,0 +1,69 @@
+services:
+  # Initializer Service
+  - type: web
+    name: initializer
+    env: custom
+    buildCommand: "cd initializer && docker build -t initializer ."
+    startCommand: "docker run initializer"
+    envVars:
+      - key: DB_HOST
+        value: db
+      - key: DB_PORT
+        value: 3306
+      - key: DB_USER
+        value: jackpotian
+      - key: DB_PASSWORD
+        fromDatabase:
+          name: mysql-db
+          property: password
+      # ... other environment variables ...
+
+  # Arm Selector Service
+  - type: web
+    name: arm-selector
+    env: custom
+    buildCommand: "cd arm-selector && docker build -t arm-selector ."
+    startCommand: "docker run arm-selector"
+    httpPort: 8090
+    envVars:
+      - key: EXPERIMENTS_PARAMS_SERVICE_URL
+        value: http://experiments-params:8091/api/v1/experiment/
+      - key: REWARD_PREDICTOR_URL
+        value: http://reward-predictor:8092/api/v1/prediction
+      - key: GIN_MODE
+        value: release
+      # ... other environment variables ...
+
+  # ... Other services ...
+
+  # MySQL Database
+  - type: psaas
+    name: mysql-db
+    env: mysql
+    plan: starter
+    envVars:
+      - key: MYSQL_ROOT_PASSWORD
+        value: testroot
+      - key: MYSQL_USER
+        value: jackpotian
+      - key: MYSQL_PASSWORD
+        generateValue: true
+      - key: MYSQL_DATABASE
+        value: experiment_db
+
+  # Cassandra Service
+  # Render does not have managed Cassandra. You'll need to set it up as a custom service or use an external provider.
+  - type: web
+    name: cassandra
+    env: custom
+    buildCommand: "cd rewards-service && docker build -f cassandra.dockerfile -t cassandra ."
+    startCommand: "docker run cassandra"
+    httpPort: 9042
+
+  # ... Other services and configurations ...
+
+# Volumes for Minio
+volumes:
+  - name: minio-data
+    path: /data
+    plan: ssd-20
