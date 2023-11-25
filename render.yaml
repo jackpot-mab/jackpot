@@ -2,7 +2,7 @@ services:
   # Initializer Service
   - type: web
     name: initializer
-    env: custom
+    runtime: docker
     buildCommand: "cd initializer && docker build -t initializer ."
     startCommand: "docker run initializer"
     envVars:
@@ -21,7 +21,7 @@ services:
   # Arm Selector Service
   - type: web
     name: arm-selector
-    env: custom
+    runtime: docker
     buildCommand: "cd arm-selector && docker build -t arm-selector ."
     startCommand: "docker run arm-selector"
     # httpPort: 8090
@@ -41,7 +41,7 @@ services:
   # MySQL Database
   - type: pserv
     name: mysql-db
-    env: mysql
+    runtime: docker
     plan: starter
     envVars:
       - key: MYSQL_ROOT_PASSWORD
@@ -57,7 +57,7 @@ services:
   # Render does not have managed Cassandra. You'll need to set it up as a custom service or use an external provider.
   - type: web
     name: cassandra
-    env: custom
+    runtime: docker
     buildCommand: "cd rewards-service && docker build -f cassandra.dockerfile -t cassandra ."
     startCommand: "docker run cassandra"
     envVars:
