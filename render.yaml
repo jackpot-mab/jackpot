@@ -24,7 +24,7 @@ services:
     env: custom
     buildCommand: "cd arm-selector && docker build -t arm-selector ."
     startCommand: "docker run arm-selector"
-    httpPort: 8090
+    # httpPort: 8090
     envVars:
       - key: EXPERIMENTS_PARAMS_SERVICE_URL
         value: http://experiments-params:8091/api/v1/experiment/
@@ -32,6 +32,8 @@ services:
         value: http://reward-predictor:8092/api/v1/prediction
       - key: GIN_MODE
         value: release
+      - key: PORT
+        value: 8090
       # ... other environment variables ...
 
   # ... Other services ...
@@ -58,7 +60,10 @@ services:
     env: custom
     buildCommand: "cd rewards-service && docker build -f cassandra.dockerfile -t cassandra ."
     startCommand: "docker run cassandra"
-    httpPort: 9042
+    envVars:
+      - key: PORT
+        value: 9042
+    # httpPort: 9042
 
   # ... Other services and configurations ...
 
