@@ -2,7 +2,7 @@ services:
   # Initializer Service
   - type: web
     name: initializer
-    runtime: image
+    runtime: docker
     buildCommand: "cd initializer && docker build -t initializer ."
     startCommand: "docker run initializer"
     envVars:
