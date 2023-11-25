@@ -66,19 +66,19 @@ services:
     # httpPort: 9042
 
 - type: pserv
-    name: minio
-    runtime: docker
-    envVars:
-    - key: MINIO_ROOT_PASSWORD
-      generateValue: true # will generate a base64-encoded 256-bit secret
-    - key: MINIO_ROOT_USER
-      sync: false # placeholder for a value to be added in the dashboard
-    - key: PORT
-      value: 9000:9000
-    disk:
-      name: data
-      mountPath: /data
-      sizeGB: 10 # optional
+  name: minio
+  runtime: docker
+  envVars:
+  - key: MINIO_ROOT_PASSWORD
+    generateValue: true # will generate a base64-encoded 256-bit secret
+  - key: MINIO_ROOT_USER
+    sync: false # placeholder for a value to be added in the dashboard
+  - key: PORT
+    value: 9000:9000
+  disk:
+    name: data
+    mountPath: /data
+    sizeGB: 10 # optional
   # ... Other services and configurations ...
 
 # Volumes for Minio
