@@ -118,11 +118,19 @@ services:
       - rabbitmq
 
 
+  model-trainer:
+    build:
+      context: ./model-trainer
+      dockerfile: Dockerfile
+    environment:
+      S3_URL: 0.0.0.0:9000
+      S3_USER: ${AWS_KEY}
+      S3_PASSWORD: ${AWS_SECRET}
+      EXPERIMENT_URL: experiments-params:8091
+      CLUSTER_HOST: cassandra
+      CLUSTER_PORT: 9042
+      FREQUENCY_SECONDS: 10
 
-
-# reward service <- tiene un .env que me lo va a pasar rodri.
-# SQS QUEUE
-# model trainer
 
 volumes:
   minio-data:

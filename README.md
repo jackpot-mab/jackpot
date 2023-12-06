@@ -1,6 +1,8 @@
 # Jackpot
 
 	Jackpot runner, all the repos in one place, scripts to start framework.
+    ![Jackpot Logo](jackpot_logo.jpg?raw=true "Jackpot")
+    
 
 ## How to add a repo
 
