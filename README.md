@@ -1,5 +1,5 @@
 # Jackpot
-![Jackpot Logo](jackpot_logo.jpg?raw=true "Jackpot")
+![Jackpot Logo](small_jackpot_logo.jpg "Jackpot")
 
 	Jackpot runner, all the repos in one place, scripts to start framework.
     
