@@ -1,8 +1,8 @@
-# ![Jackpot Logo](small_jackpot_logo.jpg "Jackpot") Jackpot 
+# Jackpot 
 
-	Jackpot multi armed bandit framework runner, all the repos in one place, scripts to start framework.
-    
-    
+	Jackpot multi armed bandit framework runner, all the repos in one place.
+
+![Jackpot Logo](small_jackpot_logo.jpg "Jackpot")
 
 ## How to add a repo
 
