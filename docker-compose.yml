@@ -123,13 +123,15 @@ services:
       context: ./model-trainer
       dockerfile: Dockerfile
     environment:
-      S3_URL: 0.0.0.0:9000
+      S3_URL: minio:9000
       S3_USER: ${AWS_KEY}
       S3_PASSWORD: ${AWS_SECRET}
-      EXPERIMENT_URL: experiments-params:8091
+      EXPERIMENT_URL: http://experiments-params:8091
       CLUSTER_HOST: cassandra
       CLUSTER_PORT: 9042
-      FREQUENCY_SECONDS: 10
+      FREQUENCY_SECONDS: 600
+    ports:
+      - "8000:8000"
 
 
 volumes:
