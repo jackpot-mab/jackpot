@@ -112,6 +112,8 @@ services:
       QUEUE_PASSWORD: ${QUEUE_PASSWORD}
       CASSANDRA_URL: cassandra
       CASSANDRA_PORT: 9042
+    ports:
+      - "8093:8093"
     depends_on:
       - initializer
       - cassandra
