@@ -14,7 +14,7 @@ services:
       AWS_KEY: ${AWS_KEY}
       AWS_SECRET: ${AWS_SECRET}
       S3_ENDPOINT: http://minio:9000
-      BUCKET_NAME: model
+      BUCKET_NAME: jackpot-bucket
       CASSANDRA_HOST: cassandra
       CASSANDRA_PORT: 9042
     depends_on:
@@ -95,9 +95,7 @@ services:
       - "15672:15672"
 
   cassandra:
-    build:
-      context: ./rewards-service
-      dockerfile: cassandra.dockerfile
+    image: cassandra:5.0
     ports:
       - "9042:9042"
 
