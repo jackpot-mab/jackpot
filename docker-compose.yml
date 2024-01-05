@@ -123,8 +123,9 @@ services:
       context: ./model-trainer
       dockerfile: Dockerfile
     environment:
-      S3_URL: minio:9000
+      S3_URL: http://minio:9000
       S3_USER: ${AWS_KEY}
+      S3_BUCKET: jackpot-bucket
       S3_PASSWORD: ${AWS_SECRET}
       EXPERIMENT_URL: http://experiments-params:8091
       CLUSTER_HOST: cassandra
