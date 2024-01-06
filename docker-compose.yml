@@ -60,8 +60,10 @@ services:
     environment:
       AWS_KEY: ${AWS_KEY}
       AWS_SECRET: ${AWS_SECRET}
+      AWS_REGION: us-east-2
       ENDPOINT: http://minio:9000
       S3_FORCE_PATH_STYLE: "true"
+      S3_BUCKET: jackpot-bucket
       GIN_MODE: release
     depends_on:
       - initializer
