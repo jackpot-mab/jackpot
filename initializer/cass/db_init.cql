@@ -8,13 +8,13 @@ CREATE KEYSPACE store
 
 -- Table optimized for fetching based on experiment_id and timestamp
 CREATE TABLE IF NOT EXISTS store.reward_by_experiment_date (
-    arm_selected text,
-    experiment_id text,
-    timestamp timestamp,
-    session_id text,
-    reward int,
-    context map<text, text>,
-    PRIMARY KEY ((experiment_id), timestamp)
+   arm_selected text,
+   experiment_id text,
+   timestamp timestamp,
+   session_id text,
+   reward int,
+   context map<text, text>,
+   PRIMARY KEY ((experiment_id), timestamp, session_id)
 ) WITH CLUSTERING ORDER BY (timestamp DESC);
 
 CREATE TABLE IF NOT EXISTS store.rewards_by_session (
